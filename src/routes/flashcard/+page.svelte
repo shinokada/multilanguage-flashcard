@@ -3,7 +3,7 @@
 	import { Label, Select, Button } from 'svelte-5-ui-lib';
 	import { randomNumberGenerator } from '$lib/utils.svelte';
 	import { Flashcard, ArrowLeft, ArrowRight } from '$lib';
-	const randomIndexFn = randomNumberGenerator(1, 1933, 50);
+	const randomIndexFn = randomNumberGenerator(26, 1933, 50);
 
 	let randomIndex = $state(randomIndexFn());
 	// $inspect('randomIndex', randomIndex);
@@ -42,16 +42,10 @@
 		randomIndex = randomIndexFn();
 	};
 
-	let myLang = $state('ja');
-	let targetLang = $state('ko');
+	let myLang = $state('en');
+	let targetLang = $state('nb');
 	let selectedLanguage = $derived(languages.find((lang) => lang.value === myLang));
 	let targetLanguage = $derived(languages.find((lang) => lang.value === targetLang));
-	let lang1lang2 = $state(
-		'text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800 opacity-100'
-	);
-	let lang2lang1 = $state(
-		'focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 opacity-50'
-	);
 	let showCardBack = $state(false);
 	let showFront = $state('Show front');
 	let showBack = $state('Show back');
@@ -63,39 +57,56 @@
 		random();
 
 	};
+
+    function handleKeyDown(event) {
+		if (event.key === 'ArrowLeft') {
+			toggleShowBack();
+			// console.log('arrowleft pressed')
+		} else if (event.key === 'ArrowRight') {
+			nextWord()
+			// console.log('arrowright is pressed')
+		}
+	}
+
+	function preventDefault(fn) {
+		return function (event) {
+			event.preventDefault();
+			fn.call(this, event);
+		};
+	}
 </script>
 
 <div class="mt-15 flex flex-col items-center">
 	<h1>Multilanguage Flashcard</h1>
-	<h2>Let's learn {targetLanguage.name} using {selectedLanguage.name}</h2>
-    <div class="w-96 m-4">
+	<h2>Learn {targetLanguage.name} using {selectedLanguage.name}</h2>
+    <div class="w-96 mb-4">
         <Select class="mt-2" items={languages} bind:value={myLang} onchange={random}/>
         <Select class="mt-2" items={languages} bind:value={targetLang} onchange={random}/>
     </div>
 	<!-- FLASHCARD -->
-	<div class="flip-box h-96 w-full bg-transparent md:w-2/3">
+	<div class="w-full md:w-1/2 h-96 justify-center items-center text-4xl mx-auto text-white bg-custom-red dark:bg-custom-red border border-gray-200 rounded-lg shadow dark:border-gray-700">
 		<div class="flip-box-inner" class:flip-it={showCardBack}>
 			<div class="relative h-full">
-				<div class='absolute inset-0 bg-red-700 p-4 text-gray-200 flex justify-center items-center'>
+				<div class='absolute inset-0 bg-red-700 p-4 flex flex-col justify-center items-center text-gray-200 items-center'>
 					{#await import(`../../../node_modules/emojibase-data/${myLang}/data.json`) then json}
-						<p class="p-8 text-9xl">
+						<p class="text-9xl">
 							{json.default[randomIndex].emoji}
 						</p>
-						<p class="mt-4 text-4xl">
+						<p class="mt-4">
                             {json.default[randomIndex].label}
                         </p>
 					{/await}
 				</div>
 				<div
-					class="absolute inset-0 flex p-4 items-center justify-center bg-blue-700 text-gray-200 opacity-0 {showCardBack
+					class="absolute inset-0 p-4 flex flex-col justify-center items-center bg-blue-700 text-gray-200 opacity-0 {showCardBack
 						? 'opacity-100 [transform:rotateY(180deg)]'
 						: ''}"
 				>
 					{#await import(`../../../node_modules/emojibase-data/${targetLang}/data.json`) then json}
-						<p class="p-8 text-9xl">
+						<p class="text-9xl">
 							{json.default[randomIndex].emoji}
 						</p>
-						<p class="mt-4 text-4xl">
+						<p class="mt-4">
                             {json.default[randomIndex].label}
                         </p>
 					{/await}
@@ -119,6 +130,8 @@
 		Use ← to flip and → to next
 	</span>
 </div>
+
+<svelte:window onkeydown={preventDefault(handleKeyDown)} />
 
 <style>
 	.flip-box {
