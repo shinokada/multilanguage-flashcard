@@ -80,10 +80,10 @@
         <Select class="mt-2" items={languages} bind:value={targetLang} onchange={random}/>
     </div>
 	<!-- FLASHCARD -->
-	<div class="w-full md:w-1/2 h-96 justify-center items-center text-4xl mx-auto text-white bg-custom-red dark:bg-custom-red border border-gray-200 rounded-lg shadow dark:border-gray-700">
+	<div class="w-full md:w-1/2 h-96 justify-center items-center text-4xl mx-auto text-white">
 		<div class="flip-box-inner" class:flip-it={showCardBack}>
 			<div class="relative h-full">
-				<div class='absolute inset-0 bg-red-700 p-4 flex flex-col justify-center items-center text-gray-200 items-center'>
+				<div class='absolute inset-0 bg-purple-950 p-4 flex flex-col justify-center items-center text-white items-center'>
 					{#await import(`../../node_modules/emojibase-data/${myLang}/data.json`) then json}
 						<p class="text-9xl">
 							{json.default[randomIndex].emoji}
@@ -94,7 +94,7 @@
 					{/await}
 				</div>
 				<div
-					class="absolute inset-0 p-4 flex flex-col justify-center items-center bg-blue-700 text-gray-200 opacity-0 {showCardBack
+					class="absolute inset-0 p-4 flex flex-col justify-center items-center bg-green-950 text-white opacity-0 {showCardBack
 						? 'opacity-100 [transform:rotateY(180deg)]'
 						: ''}"
 				>
