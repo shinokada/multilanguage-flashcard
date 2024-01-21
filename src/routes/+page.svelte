@@ -74,11 +74,13 @@
 
 <div class="mt-15 flex flex-col items-center">
 	<h1>Multilanguage Flashcard</h1>
-	<h2>Learn {targetLanguage.name} using {selectedLanguage.name}</h2>
+	
     <div class="w-96 mb-4">
+		<Label>Change your languages:</Label>
         <Select class="mt-2" items={languages} bind:value={myLang} onchange={random}/>
         <Select class="mt-2" items={languages} bind:value={targetLang} onchange={random}/>
     </div>
+	<h2>You are learning {targetLanguage.name} using {selectedLanguage.name}</h2>
 	<!-- FLASHCARD -->
 	<div class="w-full md:w-1/2 h-96 justify-center items-center text-4xl mx-auto text-white">
 		<div class="flip-box-inner" class:flip-it={showCardBack}>
