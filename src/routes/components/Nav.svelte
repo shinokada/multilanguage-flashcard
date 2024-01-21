@@ -31,7 +31,7 @@
 	<NavUl {ulClass} >
 		<NavLi href="/" {closeNav}>Home</NavLi>
 		<NavLi href="/emoji" {closeNav}>Emoji</NavLi>
-		<NavLi href="/credits" {closeNav}>Credits</NavLi>
+		<NavLi href="/about" {closeNav}>About</NavLi>
 	</NavUl>
     
 </Navbar>
