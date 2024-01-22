@@ -114,12 +114,12 @@
 	</div>
 
 	<div class="flex space-x-4 pt-4">
-		<button onclick={toggleShowBack} class="inline-flex min-w-44 items-center bg-gray-300 p-4">
+		<button onclick={toggleShowBack} class="inline-flex min-w-44 items-center bg-gray-300 dark:bg-gray-800 p-4">
 			<ArrowLeft class="mr-4" />
 			{showCardBack ? showFront : showBack}
 		</button>
 
-		<button class="inline-flex bg-gray-300 p-4 text-right" onclick={() => nextWord()}>
+		<button class="inline-flex bg-gray-300 dark:bg-gray-800 p-4 text-right" onclick={() => nextWord()}>
 			NEXT
 			<ArrowRight class="ml-4" />
 		</button>
