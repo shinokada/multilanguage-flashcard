@@ -1,5 +1,12 @@
 # multilanguage-flashcard
 
+## 1.0.2
+
+### Patch Changes
+
+- chore: dependencies update
+  docs: update about page
+
 ## 1.0.1
 
 ### Patch Changes
