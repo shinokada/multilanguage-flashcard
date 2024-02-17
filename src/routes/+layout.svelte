@@ -6,7 +6,7 @@
 </script>
 
 <Nav />
-<main class="pb-16 p-4 border-b border-gray-800">
+<main class="pb-16 p-4 border-b border-gray-200 dark:border-gray-700">
 {@render children()}
 </main>
 <Footer />
