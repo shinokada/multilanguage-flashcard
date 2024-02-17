@@ -1,4 +1,5 @@
 <script>
+  import { removeHyphensAndCapitalize } from "$lib/utils.svelte"
   const name = __NAME__
   const version = __VERSION__
   const svelte5uilibVersion = __SVELTE5UILIBVERSION__
@@ -36,7 +37,7 @@
 <h2>Technical info</h2>
 <ul class="text-left m-4 p-4 text-lg list-disc dark:text-gray-400">
   <li class="hover:text-red-700 hover:underline">
-    <a href="https://svelte-5-preview.vercel.app/docs/introduction" class="hover:underline me-4 md:me-6">{name} : { version }</a>
+    <a href="https://svelte-5-preview.vercel.app/docs/introduction" class="hover:underline me-4 md:me-6">{removeHyphensAndCapitalize(name)} : { version }</a>
   </li>
   <li class="hover:text-red-700 hover:underline">
     <a href="https://svelte-5-preview.vercel.app/docs/introduction" class="hover:underline me-4 md:me-6">Svelte 5: { svelteVersion }</a>
