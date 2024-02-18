@@ -1,7 +1,13 @@
 {
   "name": "multilanguage-flashcard",
   "version": "1.0.3",
-  "private": false,
+  "description": "Learn 27 languages with emojis on Multilanguage flashcard.",
+	"homepage": "https://multilanguage-flashcard.vercel.app/",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/shinokada/multilanguage-flashcard"
+	},
+  "private": true,
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",

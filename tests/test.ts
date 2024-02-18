@@ -9,3 +9,8 @@ test('emoji page has expected h1', async ({ page }) => {
   await page.goto('/emoji');
   await expect(page.getByRole('heading', { name: 'Emoji list' })).toBeVisible();
 });
+
+test('about page has expected h1', async ({ page }) => {
+  await page.goto('/about');
+  await expect(page.getByRole('heading', { name: 'About' })).toBeVisible();
+});
