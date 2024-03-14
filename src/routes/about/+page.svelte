@@ -13,9 +13,7 @@
   <h1>About</h1>
 
   <p>
-    This flashcard system supports a wide array of languages, allowing users to learn and practice
-    vocabulary in their target language. From commonly spoken languages like English, Spanish, and
-    Mandarin to niche languages, we've got you covered.
+    Learn basic phrases in 27 languages with Emoji flashcards.
   </p>
 
   <h2>LexiLearn Hub Apps</h2>
@@ -84,7 +82,7 @@
       >
     </li>
     <li class="hover:text-red-700 hover:underline">
-      <a href="https://github.com/shinokada" class="me-4 hover:underline md:me-6">Author: Shin</a>
+      <a href="https://codewithshin.com" class="me-4 hover:underline md:me-6">Author: codewithshin.com</a>
     </li>
   </ul>
 </div>
