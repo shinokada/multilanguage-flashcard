@@ -5,6 +5,7 @@
   const randomIndexFn = randomNumberGenerator(26, 1933, 50);
 
   let randomIndex = $state(randomIndexFn());
+  let { myLang = $bindable('en'), targetLang = $bindable('nb') }: { myLang: string; targetLang: string } = $props();
 
   const languages = [
     { value: 'bn', name: 'বাংলা' },
@@ -40,8 +41,6 @@
     randomIndex = randomIndexFn();
   };
 
-  let myLang = $state('en');
-  let targetLang = $state('nb');
   let selectedLanguage = $derived(languages.find((lang) => lang.value === myLang));
   let targetLanguage = $derived(languages.find((lang) => lang.value === targetLang));
   let showCardBack = $state(false);
@@ -140,13 +139,7 @@
 <svelte:window onkeydown={preventDefault(handleKeyDown)} />
 
 <style>
-  .flip-box {
-    background-color: transparent;
-    /* width: 400px;
-		height: 300px; */
-    /* 		border: 1px solid #ddd; */
-    perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  }
+  
   /* This container is needed to position the front and back side */
   .flip-box-inner {
     position: relative;
