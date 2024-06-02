@@ -53,7 +53,7 @@
     random();
   };
 
-  function handleKeyDown(event) {
+  function handleKeyDown(event: KeyboardEvent) {
     if (event.key === 'ArrowLeft') {
       toggleShowBack();
       // console.log('arrowleft pressed')
@@ -79,7 +79,7 @@
     <Select selectclass="mt-2" items={languages} bind:value={myLang} onchange={random} />
     <Select selectclass="mt-2" items={languages} bind:value={targetLang} onchange={random} />
   </div>
-  <h2>You are learning {targetLanguage.name} using {selectedLanguage.name}</h2>
+  <h2>You are learning {targetLanguage?.name} using {selectedLanguage?.name}</h2>
   <!-- FLASHCARD -->
   <div class="mx-auto h-96 w-full items-center justify-center text-4xl text-white md:w-1/2">
     <div class="flip-box-inner" class:flip-it={showCardBack}>
