@@ -1,13 +1,20 @@
-<script>
+<script lang="ts">
   import { twMerge } from 'tailwind-merge';
-  let { front, back, showCardBack, pFront, pBack } = $props();
+  interface Props {
+    front: string | undefined;
+    back: string | undefined;
+    showCardBack: boolean;
+    pFront?: string;
+    pBack?: string;
+  }
+  let { front = '', back, showCardBack, pFront, pBack }: Props = $props();
 
   const frontDivCls = 'absolute inset-0 bg-custom-red text-white flex justify-center items-center';
   const pClass = 'text-5xl p-8';
   let frontPCls = twMerge(pClass, pFront);
   let backPCls = twMerge(pClass, pBack);
 
-  function limitCharacters(content, limit) {
+  function limitCharacters(content: string, limit: number) {
     return content.length > limit ? content.slice(0, limit) + '...' : content;
   }
 </script>

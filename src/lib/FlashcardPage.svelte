@@ -1,12 +1,18 @@
-<script>
+<script lang="ts">
   // import dictionary from '$lib/data/verbs.json';
+  interface Props {
+    dictionary: any;
+    title?: string;
+    pFront?: string;
+    pBack?: string;
+  }
   import { twMerge } from 'tailwind-merge';
   import { Flashcard, ArrowLeft, ArrowRight } from '$lib';
-  import { getRandomPair } from '$lib/utils.svelte.js';
-  let { dictionary, title = 'Flashcard', pFront, pBack } = $props();
+  import { getRandomPair } from '$lib/utils.js';
+  let { dictionary, title = 'Flashcard', pFront, pBack }: Props = $props();
 
-  let front = $state();
-  let back = $state();
+  let front: string | undefined = $state('');
+  let back: string | undefined = $state('');
   let showCardBack = $state(false);
   let showFront = $state('Vis norsk');
   let showBack = $state('Show English');
@@ -19,7 +25,7 @@
   let langlang = 'noreng';
   const toggleShowBack = () => (showCardBack = !showCardBack);
 
-  const updateLang = (lang) => {
+  const updateLang = (lang: string) => {
     langlang = lang;
     if (lang === 'noreng') {
       showFront = 'Vis norsk';
@@ -40,7 +46,7 @@
 
   updateLang(langlang);
 
-  function handleKeyDown(event) {
+  function handleKeyDown(event: KeyboardEvent) {
     if (event.key === 'ArrowLeft') {
       toggleShowBack();
       // console.log('arrowleft pressed')
@@ -50,8 +56,8 @@
     }
   }
 
-  function preventDefault(fn) {
-    return function (event) {
+  function preventDefault<T>(this: T, fn: (this: T, event: KeyboardEvent) => void) {
+    return function(this: T, event: KeyboardEvent) {
       event.preventDefault();
       fn.call(this, event);
     };

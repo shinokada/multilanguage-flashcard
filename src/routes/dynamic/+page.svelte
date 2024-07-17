@@ -41,7 +41,7 @@
 </script>
 
 <h1>Dynamic</h1>
-<h2>Let's learn {targetLanguage.name} using {selectedLanguage.name}</h2>
+<h2>Let's learn {targetLanguage?.name} using {selectedLanguage?.name}</h2>
 <Select class="mt-2" items={languages} bind:value={myLang} />
 <Select class="mt-2" items={languages} bind:value={targetLang} />
 

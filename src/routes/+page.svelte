@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Label, Select, Button } from 'svelte-5-ui-lib';
-  import { randomNumberGenerator } from '$lib/utils.svelte';
+  import { randomNumberGenerator } from '$lib/utils';
   import { ArrowLeft, ArrowRight } from '$lib';
   const randomIndexFn = randomNumberGenerator(26, 1933, 50);
 
@@ -63,8 +63,14 @@
     }
   }
 
-  function preventDefault(fn) {
-    return function (event) {
+  // function preventDefault(fn) {
+  //   return function (event) {
+  //     event.preventDefault();
+  //     fn.call(this, event);
+  //   };
+  // }
+  function preventDefault<T>(this: T, fn: (this: T, event: KeyboardEvent) => void) {
+    return function(this: T, event: KeyboardEvent) {
       event.preventDefault();
       fn.call(this, event);
     };
@@ -76,8 +82,8 @@
 
   <div class="mb-4 w-96">
     <Label>Change your languages:</Label>
-    <Select selectclass="mt-2" items={languages} bind:value={myLang} onchange={random} />
-    <Select selectclass="mt-2" items={languages} bind:value={targetLang} onchange={random} />
+    <Select selectClass="mt-2" items={languages} bind:value={myLang} onchange={random} />
+    <Select selectClass="mt-2" items={languages} bind:value={targetLang} onchange={random} />
   </div>
   <h2>You are learning {targetLanguage?.name} using {selectedLanguage?.name}</h2>
   <!-- FLASHCARD -->

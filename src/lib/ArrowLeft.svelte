@@ -1,7 +1,8 @@
 <script lang="ts">
   import { getContext } from 'svelte';
+  import type { SVGAttributes } from 'svelte/elements';
 
-  interface CtxType {
+  interface Props extends SVGAttributes<SVGSVGElement> {
     size?: string;
     role?: string;
     color?: string;
@@ -11,7 +12,7 @@
     ariaLabel?: string;
   }
 
-  const ctx: CtxType = getContext('iconCtx') ?? {};
+  const ctx: Props = getContext('iconCtx') ?? {};
   let {
     size = '24',
     role = 'img',
@@ -21,7 +22,7 @@
     strokeWidth = '0 0 24 24',
     ariaLabel = 'arrow left',
     ...attributes
-  } = $props<CtxType>();
+  }: Props = $props();
 
   if (variation === 'mini') {
     size = size || '20';

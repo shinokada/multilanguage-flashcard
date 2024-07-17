@@ -1,4 +1,4 @@
-export function removeHyphensAndCapitalize(str) {
+export function removeHyphensAndCapitalize(str: string) {
   // Handle empty string or strings without '-'
   if (!str || !str.includes('-')) {
     return str;
@@ -11,11 +11,11 @@ export function removeHyphensAndCapitalize(str) {
   return capitalized.replace(/-|\s{2,}/g, ' ');
 }
 
-export function randomword(wordList) {
+export function randomword(wordList: string[]) {
   return wordList[Math.floor(Math.random() * wordList.length)];
 }
 
-export function getRandomItemFromDictionary(dictionary) {
+export function getRandomItemFromDictionary<T>(dictionary: { [key: string]: T }): { [key: string]: T } {
   const keys = Object.keys(dictionary);
   const randomKey = keys[Math.floor(Math.random() * keys.length)];
 
@@ -24,27 +24,33 @@ export function getRandomItemFromDictionary(dictionary) {
   };
 }
 
-export const randomNumberGenerator = (min, max, maxConsecutiveRepeats) => {
-  let previousNumbers = [];
+export const randomNumberGenerator = (min: number, max: number, maxConsecutiveRepeats: number): () => number => {
+  let previousNumbers: number[] = [];
 
-  return () => {
-    let randomNumber;
+  return (): number => {
+      let randomNumber: number;
 
-    do {
-      randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-    } while (previousNumbers.includes(randomNumber));
+      do {
+          randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+      } while (previousNumbers.includes(randomNumber));
 
-    if (previousNumbers.length >= maxConsecutiveRepeats) {
-      previousNumbers.shift();
-    }
+      if (previousNumbers.length >= maxConsecutiveRepeats) {
+          previousNumbers.shift();
+      }
 
-    previousNumbers.push(randomNumber);
+      previousNumbers.push(randomNumber);
 
-    return randomNumber;
+      return randomNumber;
   };
 };
 
-export function getRandomPair(jsonData, langlang, isExplain = false, maxConsecutiveRepeats = 50) {
+interface WordPair {
+  norsk: string;
+  english: string;
+  norskexplanation?: string; // Optional explanation
+}
+
+export function getRandomPair(jsonData: WordPair[] , langlang: string, isExplain = false, maxConsecutiveRepeats = 50) {
   const randomIndexFn = randomNumberGenerator(0, jsonData.length - 1, maxConsecutiveRepeats);
 
   const randomIndex = randomIndexFn();
@@ -84,7 +90,7 @@ export function getRandomPair(jsonData, langlang, isExplain = false, maxConsecut
   }
 }
 
-export function openTab(word, website) {
+export function openTab(word: string, website: string) {
   let baseUrl = '';
   if (website === 'google') {
     baseUrl = 'https://translate.google.com/?hl=en&tab=TT&sl=no&tl=en&op=translate&text=';
@@ -96,7 +102,7 @@ export function openTab(word, website) {
   window.open(url, '_blank');
 }
 
-export function cleanWord(word) {
+export function cleanWord(word: string) {
   // Remove characters after '/'
   let withoutSlash = word.replace(/\/.*$/, '');
 

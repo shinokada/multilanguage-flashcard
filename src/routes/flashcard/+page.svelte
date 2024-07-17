@@ -1,7 +1,7 @@
 <script lang="ts">
   import { twMerge } from 'tailwind-merge';
   import { Label, Select, Button } from 'svelte-5-ui-lib';
-  import { randomNumberGenerator } from '$lib/utils.svelte';
+  import { randomNumberGenerator } from '$lib/utils';
   import { Flashcard, ArrowLeft, ArrowRight } from '$lib';
   const randomIndexFn = randomNumberGenerator(26, 1933, 50);
 
@@ -56,7 +56,7 @@
     random();
   };
 
-  function handleKeyDown(event) {
+  function handleKeyDown(event: KeyboardEvent) {
     if (event.key === 'ArrowLeft') {
       toggleShowBack();
       // console.log('arrowleft pressed')
@@ -66,17 +66,23 @@
     }
   }
 
-  function preventDefault(fn) {
-    return function (event) {
-      event.preventDefault();
-      fn.call(this, event);
-    };
-  }
+  // function preventDefault(fn) {
+  //   return function (event) {
+  //     event.preventDefault();
+  //     fn.call(this, event);
+  //   };
+  // }
+  function preventDefault<T>(this: T, fn: (this: T, event: KeyboardEvent) => void) {
+  return function(this: T, event: KeyboardEvent) {
+    event.preventDefault();
+    fn.call(this, event);
+  };
+}
 </script>
 
 <div class="mt-15 flex flex-col items-center">
   <h1>Multilanguage Flashcard</h1>
-  <h2>Learn {targetLanguage.name} using {selectedLanguage.name}</h2>
+  <h2>Learn {targetLanguage?.name} using {selectedLanguage?.name}</h2>
   <div class="mb-4 w-96">
     <Select class="mt-2" items={languages} bind:value={myLang} onchange={random} />
     <Select class="mt-2" items={languages} bind:value={targetLang} onchange={random} />
@@ -136,13 +142,6 @@
 <svelte:window onkeydown={preventDefault(handleKeyDown)} />
 
 <style>
-  .flip-box {
-    background-color: transparent;
-    /* width: 400px;
-		height: 300px; */
-    /* 		border: 1px solid #ddd; */
-    perspective: 1000px; /* Remove this if you don't want the 3D effect */
-  }
   /* This container is needed to position the front and back side */
   .flip-box-inner {
     position: relative;
