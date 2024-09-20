@@ -82,8 +82,8 @@
 
   <div class="mb-4 w-96">
     <Label>Change your languages:</Label>
-    <Select selectClass="mt-2" items={languages} bind:value={myLang} onchange={random} />
-    <Select selectClass="mt-2" items={languages} bind:value={targetLang} onchange={random} />
+    <Select class="mt-2" items={languages} bind:value={myLang} onchange={random} />
+    <Select class="mt-2" items={languages} bind:value={targetLang} onchange={random} />
   </div>
   <h2>You are learning {targetLanguage?.name} using {selectedLanguage?.name}</h2>
   <!-- FLASHCARD -->
