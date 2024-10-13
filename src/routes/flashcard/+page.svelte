@@ -73,11 +73,11 @@
   //   };
   // }
   function preventDefault<T>(this: T, fn: (this: T, event: KeyboardEvent) => void) {
-  return function(this: T, event: KeyboardEvent) {
-    event.preventDefault();
-    fn.call(this, event);
-  };
-}
+    return function (this: T, event: KeyboardEvent) {
+      event.preventDefault();
+      fn.call(this, event);
+    };
+  }
 </script>
 
 <div class="mt-15 flex flex-col items-center">
@@ -89,7 +89,7 @@
   </div>
   <!-- FLASHCARD -->
   <div
-    class="bg-custom-red dark:bg-custom-red mx-auto h-96 w-full items-center justify-center rounded-lg border border-gray-200 text-4xl text-white shadow dark:border-gray-700 md:w-1/2"
+    class="bg-custom-red dark:bg-custom-red mx-auto h-96 w-full items-center justify-center rounded-lg border border-gray-200 text-4xl text-white shadow md:w-1/2 dark:border-gray-700"
   >
     <div class="flip-box-inner" class:flip-it={showCardBack}>
       <div class="relative h-full">

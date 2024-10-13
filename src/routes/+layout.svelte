@@ -12,12 +12,15 @@
       : data.layoutMetaTags
   );
   $effect(() => {
-    metaTags = $page.data.pageMetaTags ? deepMerge($page.data.layoutMetaTags, $page.data.pageMetaTags ) : data.layoutMetaTags
+    metaTags = $page.data.pageMetaTags
+      ? deepMerge($page.data.layoutMetaTags, $page.data.pageMetaTags)
+      : data.layoutMetaTags;
   });
-  const analyticsId = data.ANALYTICS_ID_LANGUAGE_APP
+  const analyticsId = data.ANALYTICS_ID_LANGUAGE_APP;
 </script>
+
 <Runatics {analyticsId} />
-<RunesMetaTags {...metaTags}/>
+<RunesMetaTags {...metaTags} />
 <Nav />
 <main class="border-b border-gray-200 p-4 pb-16 dark:border-gray-700">
   {@render children()}

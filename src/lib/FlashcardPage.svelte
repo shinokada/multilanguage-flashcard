@@ -57,7 +57,7 @@
   }
 
   function preventDefault<T>(this: T, fn: (this: T, event: KeyboardEvent) => void) {
-    return function(this: T, event: KeyboardEvent) {
+    return function (this: T, event: KeyboardEvent) {
       event.preventDefault();
       fn.call(this, event);
     };

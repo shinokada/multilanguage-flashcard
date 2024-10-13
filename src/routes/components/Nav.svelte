@@ -26,7 +26,7 @@
     {#snippet brand()}
       <NavBrand siteName="Multilanguage Flashcard" {closeNav} />
       <div class="ml-auto flex items-center md:order-1">
-        <Darkmode class="inline-block dark:hover:text-white hover:text-gray-900" />
+        <Darkmode class="inline-block hover:text-gray-900 dark:hover:text-white" />
       </div>
     {/snippet}
 

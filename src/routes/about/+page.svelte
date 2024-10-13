@@ -1,5 +1,6 @@
 <script>
   import { removeHyphensAndCapitalize } from '$lib/utils';
+  /*eslint no-undef: "off"*/
   const name = __NAME__;
   const version = __VERSION__;
   const githuburl = __GITHUBURL__;
@@ -12,19 +13,20 @@
 <div class="mx-auto max-w-4xl p-8">
   <h1>About</h1>
 
-  <p>
-    Learn basic phrases in 27 languages with Emoji flashcards.
-  </p>
+  <p>Learn basic phrases in 27 languages with Emoji flashcards.</p>
 
   <h2>LexiLearn Hub Apps</h2>
 
   <ul class="m-4 list-disc p-4 text-left text-lg dark:text-gray-400">
     <li class="hover:text-red-700 hover:underline">
-      <a href="https://gjett-norsk.codewithshin.com/" class="me-4 hover:underline md:me-6">Gjett Norsk</a>
+      <a href="https://gjett-norsk.codewithshin.com/" class="me-4 hover:underline md:me-6"
+        >Gjett Norsk</a
+      >
     </li>
     <li class="hover:text-red-700 hover:underline">
-      <a href="https://multilanguage-flashcard.codewithshin.com/" class="me-4 hover:underline md:me-6"
-        >Multilanguage flashcard</a
+      <a
+        href="https://multilanguage-flashcard.codewithshin.com/"
+        class="me-4 hover:underline md:me-6">Multilanguage flashcard</a
       >
     </li>
     <li class="hover:text-red-700 hover:underline">
@@ -38,9 +40,9 @@
       >
     </li>
     <li class="hover:text-red-700 hover:underline">
-        <a href="https://flexilexi-dictionary.codewithshin.com/" class="me-4 hover:underline md:me-6"
-          >Fexilexi dictionary (English/Norwegian/Japanese)</a
-        >
+      <a href="https://flexilexi-dictionary.codewithshin.com/" class="me-4 hover:underline md:me-6"
+        >Fexilexi dictionary (English/Norwegian/Japanese)</a
+      >
     </li>
   </ul>
 
@@ -76,13 +78,12 @@
   <h2 class="m-4 text-left text-2xl font-bold dark:text-white">Repo</h2>
   <ul class="m-4 list-disc p-4 text-left text-lg dark:text-gray-400">
     <li class="hover:text-red-700 hover:underline">
-      <a
-        href="{githuburl}"
-        class="me-4 hover:underline md:me-6">Github repo</a
-      >
+      <a href={githuburl} class="me-4 hover:underline md:me-6">Github repo</a>
     </li>
     <li class="hover:text-red-700 hover:underline">
-      <a href="https://codewithshin.com" class="me-4 hover:underline md:me-6">Author: codewithshin.com</a>
+      <a href="https://codewithshin.com" class="me-4 hover:underline md:me-6"
+        >Author: codewithshin.com</a
+      >
     </li>
   </ul>
 </div>

@@ -18,7 +18,7 @@ export default defineConfig({
     __GITHUBURL__: JSON.stringify(pkg.repository.url),
     __SVELTE_VERSION__: JSON.stringify(sveltePackage.version),
     __SVELTEKIT_VERSION__: JSON.stringify(svelteKitPackage.version),
-		__VITE_VERSION__: JSON.stringify(vitePackage.version),
-		__SVELTE_5_UI_LIB_VERSION__: JSON.stringify(svelte5uilib.version),
+    __VITE_VERSION__: JSON.stringify(vitePackage.version),
+    __SVELTE_5_UI_LIB_VERSION__: JSON.stringify(svelte5uilib.version)
   }
 });

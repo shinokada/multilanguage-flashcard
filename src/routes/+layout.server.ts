@@ -3,9 +3,8 @@ import type { MetaProps } from 'runes-meta-tags';
 import { metaTitle, metaDescription, metaImg, removeHyphensAndCapitalize } from 'runes-meta-tags';
 
 export const load = ({ url }) => {
-
   const title = metaTitle(url.pathname, __NAME__);
-  const basicDesc = 'Learn basic phrases in 27 languages with Emoji flashcards.'
+  const basicDesc = 'Learn basic phrases in 27 languages with Emoji flashcards.';
   const description = metaDescription(url.pathname, basicDesc);
   const image = metaImg(url.pathname, __NAME__);
 
@@ -20,7 +19,7 @@ export const load = ({ url }) => {
       title,
       description,
       image,
-      imageAlt: title,
+      imageAlt: title
     },
     og: {
       type: 'website',
@@ -35,7 +34,7 @@ export const load = ({ url }) => {
     }
   };
   return {
-		layoutMetaTags,
-		ANALYTICS_ID_LANGUAGE_APP
+    layoutMetaTags,
+    ANALYTICS_ID_LANGUAGE_APP
   };
 };

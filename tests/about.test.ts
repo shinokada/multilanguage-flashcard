@@ -36,7 +36,10 @@ test('about page has expected meta twitter', async ({ page }) => {
   const metaTwitterTitle = page.locator('meta[name="twitter:title"]');
   await expect(metaTwitterTitle).toHaveAttribute('content', 'About - Multilanguage Flashcard');
   const metaTwitterDescription = page.locator('meta[name="twitter:description"]');
-  await expect(metaTwitterDescription).toHaveAttribute('content', 'About - Multilanguage Flashcard');
+  await expect(metaTwitterDescription).toHaveAttribute(
+    'content',
+    'About - Multilanguage Flashcard'
+  );
   const metaTwitterImage = page.locator('meta[name="twitter:image"]');
   await expect(metaTwitterImage).toHaveAttribute(
     'content',

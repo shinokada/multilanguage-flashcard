@@ -5,7 +5,10 @@
   const randomIndexFn = randomNumberGenerator(26, 1933, 50);
 
   let randomIndex = $state(randomIndexFn());
-  let { myLang = $bindable('en'), targetLang = $bindable('nb') }: { myLang: string; targetLang: string } = $props();
+  let {
+    myLang = $bindable('en'),
+    targetLang = $bindable('nb')
+  }: { myLang: string; targetLang: string } = $props();
 
   const languages = [
     { value: 'bn', name: 'বাংলা' },
@@ -70,7 +73,7 @@
   //   };
   // }
   function preventDefault<T>(this: T, fn: (this: T, event: KeyboardEvent) => void) {
-    return function(this: T, event: KeyboardEvent) {
+    return function (this: T, event: KeyboardEvent) {
       event.preventDefault();
       fn.call(this, event);
     };
@@ -145,7 +148,6 @@
 <svelte:window onkeydown={preventDefault(handleKeyDown)} />
 
 <style>
-  
   /* This container is needed to position the front and back side */
   .flip-box-inner {
     position: relative;
