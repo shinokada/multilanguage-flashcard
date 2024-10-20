@@ -1,5 +1,5 @@
 <script lang="ts">
-  // import dictionary from '$lib/data/verbs.json';
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   interface Props {
     dictionary: any;
     title?: string;
