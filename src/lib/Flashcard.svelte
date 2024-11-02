@@ -21,6 +21,7 @@
 
 <div class="relative h-full">
   <div class={frontDivCls}>
+    <!-- eslint-disable svelte/no-at-html-tags -->
     <p class={frontPCls}>{@html limitCharacters(front, 200)}</p>
   </div>
   <div
@@ -28,6 +29,7 @@
       ? 'opacity-100 [transform:rotateY(180deg)]'
       : ''}"
   >
+    <!-- eslint-disable svelte/no-at-html-tags -->
     <p class={backPCls}>{@html back}</p>
   </div>
 </div>

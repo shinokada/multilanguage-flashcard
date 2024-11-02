@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { twMerge } from 'tailwind-merge';
-  import { Label, Select, Button } from 'svelte-5-ui-lib';
+  import { Select } from 'svelte-5-ui-lib';
   import { randomNumberGenerator } from '$lib/utils';
-  import { Flashcard, ArrowLeft, ArrowRight } from '$lib';
+  import { ArrowLeft, ArrowRight } from '$lib';
   const randomIndexFn = randomNumberGenerator(26, 1933, 50);
 
   let randomIndex = $state(randomIndexFn());

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Label, Select } from 'svelte-5-ui-lib';
+  import { Select } from 'svelte-5-ui-lib';
 
   const languages = [
     { value: 'bn', name: 'বাংলা' },
