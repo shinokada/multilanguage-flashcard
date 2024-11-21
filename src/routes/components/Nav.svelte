@@ -1,5 +1,12 @@
 <script>
   import { Navbar, NavLi, NavBrand, NavUl, uiHelpers, Darkmode } from 'svelte-5-ui-lib';
+  import { page } from '$app/stores';
+
+  let activeUrl = $state($page.url.pathname);
+  $effect(() => {
+    activeUrl = $page.url.pathname;
+  });
+
   let nav = uiHelpers();
 
   let navStatus = $state(false);
@@ -30,7 +37,7 @@
       </div>
     {/snippet}
 
-    <NavUl class={ulclass}>
+    <NavUl {activeUrl} class={ulclass}>
       <NavLi href="/" {closeNav}>Home</NavLi>
       <NavLi href="/emoji" {closeNav}>Emoji</NavLi>
       <NavLi href="/about" {closeNav}>About</NavLi>
