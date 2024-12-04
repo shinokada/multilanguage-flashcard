@@ -1,6 +1,6 @@
 <script>
   // import emojis from 'emojibase-data/en/data.json';
-  import { Select } from 'svelte-5-ui-lib';
+  import { Select } from 'flowbite-svelte';
   const languages = [
     { value: 'bn', name: 'বাংলা' },
     { value: 'da', name: 'Dansk' },

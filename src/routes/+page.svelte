@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Label, Select } from 'svelte-5-ui-lib';
+  import { Label, Select } from 'flowbite-svelte';
   import { randomNumberGenerator } from '$lib/utils';
   import { ArrowLeft, ArrowRight } from '$lib';
   const randomIndexFn = randomNumberGenerator(26, 1933, 50);
