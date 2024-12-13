@@ -34,7 +34,7 @@ importers:
         version: 10.4.20(postcss@8.4.49)
       emojibase-data:
         specifier: ^15.3.2
-        version: 15.3.2(emojibase@15.3.1)
+        version: 15.3.2(emojibase@16.0.0)
       eslint:
         specifier: ^9.16.0
         version: 9.16.0(jiti@1.21.6)
@@ -1033,8 +1033,9 @@ packages:
     peerDependencies:
       emojibase: '*'
 
-  emojibase@15.3.1:
-    resolution: {integrity: sha512-GNsjHnG2J3Ktg684Fs/vZR/6XpOSkZPMAv85EHrr6br2RN2cJNwdS4am/3YSK3y+/gOv2kmoK3GGdahXdMxg2g==}
+  emojibase@16.0.0:
+    resolution: {integrity: sha512-Nw2m7JLIO4Ou2X/yZPRNscHQXVbbr6SErjkJ7EooG7MbR3yDZszCv9KTizsXFc7yZl0n3WF+qUKIC/Lw6H9xaQ==}
+    engines: {node: '>=18.12.0'}
 
   enquirer@2.4.1:
     resolution: {integrity: sha512-rRqJg/6gd538VHvR3PSrdRBb/1Vy2YfzHqzvbhGIQpDRKIa4FgV/54b5Q1xYSxOOwKvjXweS26E0Q+nAMwp2pQ==}
@@ -3091,11 +3092,11 @@ snapshots:
 
   emoji-regex@9.2.2: {}
 
-  emojibase-data@15.3.2(emojibase@15.3.1):
+  emojibase-data@15.3.2(emojibase@16.0.0):
     dependencies:
-      emojibase: 15.3.1
+      emojibase: 16.0.0
 
-  emojibase@15.3.1: {}
+  emojibase@16.0.0: {}
 
   enquirer@2.4.1:
     dependencies:
