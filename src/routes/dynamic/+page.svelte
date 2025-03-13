@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Select } from 'flowbite-svelte';
+  import { Select } from 'svelte-5-ui-lib';
 
   const languages = [
     { value: 'bn', name: 'বাংলা' },
