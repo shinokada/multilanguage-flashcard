@@ -50,14 +50,14 @@
   <ul class="m-4 list-disc p-4 text-left text-lg dark:text-gray-400">
     <li class="hover:text-red-700 hover:underline">
       <a
-        href="https://svelte-5-preview.codewithshin.com/docs/introduction"
+        href="https://multilanguage-flashcard.codewithshin.com/"
         class="me-4 hover:underline md:me-6">{removeHyphensAndCapitalize(name)} : {version}</a
       >
     </li>
     <li class="hover:text-red-700 hover:underline">
       <a
-        href="https://svelte-5-preview.codewithshin.com/docs/introduction"
-        class="me-4 hover:underline md:me-6">Svelte 5: {svelteVersion}</a
+        href="https://svelte.dev"
+        class="me-4 hover:underline md:me-6">Svelte: {svelteVersion}</a
       >
     </li>
     <li>
