@@ -91,7 +91,15 @@
   <h2>You are learning {targetLanguage?.name} using {selectedLanguage?.name}</h2>
   <!-- FLASHCARD -->
   <div class="mx-auto h-96 w-full items-center justify-center text-4xl text-white md:w-1/2">
-    <div class="flip-box-inner" class:flip-it={showCardBack}>
+    <div
+      class="flip-box-inner"
+      class:flip-it={showCardBack}
+      onclick={toggleShowBack}
+      onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleShowBack()}
+      tabindex="0"
+      role="button"
+      aria-pressed={showCardBack}
+    >
       <div class="relative h-full">
         <div
           class="absolute inset-0 flex flex-col items-center items-center justify-center bg-purple-950 p-4 text-white"
@@ -123,25 +131,17 @@
     </div>
   </div>
 
-  <div class="flex space-x-4 pt-4">
+  <div class="flex pt-4">
     <button
-      onclick={toggleShowBack}
-      class="inline-flex min-w-44 items-center bg-gray-300 p-4 dark:bg-gray-800"
-    >
-      <ArrowLeft class="mr-4" />
-      {showCardBack ? showFront : showBack}
-    </button>
-
-    <button
-      class="inline-flex bg-gray-300 p-4 text-right dark:bg-gray-800"
+      class="inline-flex bg-gray-300 p-2 sm:p-4 text-right dark:bg-gray-800"
       onclick={() => nextWord()}
     >
       NEXT
       <ArrowRight class="ml-4" />
     </button>
   </div>
-  <span class="right-full mt-4 hidden rounded bg-gray-900 px-2 py-1 text-white lg:inline-block">
-    Use ← to flip and → to next
+  <span class="right-full mt-4 rounded bg-gray-900 px-2 py-1 text-white">
+    Click the card or press Left Arrow (←), Space, or Enter to flip. Use Right Arrow (→) for next.
   </span>
 </div>
 
@@ -156,6 +156,8 @@
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    cursor: pointer;
+    user-select: none;
   }
 
   /* Do an horizontal flip on button click */

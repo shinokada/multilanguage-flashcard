@@ -53,6 +53,8 @@
     } else if (event.key === 'ArrowRight') {
       updateLang(langlang);
       // console.log('arrowright is pressed')
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      toggleShowBack();
     }
   }
 
@@ -74,19 +76,22 @@
   </div>
   <!-- FLASHCARD -->
   <div class="flip-box h-96 w-full bg-transparent md:w-2/3">
-    <div class="flip-box-inner" class:flip-it={showCardBack}>
+    <div
+      class="flip-box-inner"
+      class:flip-it={showCardBack}
+      onclick={toggleShowBack}
+      onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleShowBack()}
+      tabindex="0"
+      role="button"
+      aria-pressed={showCardBack}
+    >
       <Flashcard {front} {back} {showCardBack} {pFront} {pBack} />
     </div>
   </div>
 
   <!-- BUTTONS -->
 
-  <div class="flex space-x-4 pt-4">
-    <button onclick={toggleShowBack} class="inline-flex min-w-44 items-center bg-gray-300 p-4">
-      <ArrowLeft class="mr-4" />
-      {showCardBack ? showFront : showBack}
-    </button>
-
+  <div class="flex pt-4">
     <button class="inline-flex bg-gray-300 p-4 text-right" onclick={() => updateLang(langlang)}>
       NEXT
       <ArrowRight class="ml-4" />
@@ -115,6 +120,8 @@
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    cursor: pointer;
+    user-select: none;
   }
 
   /* Do an horizontal flip on button click */
