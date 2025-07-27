@@ -203,12 +203,12 @@
 </script>
 
 <div class="flex flex-col items-center">
-  <h1 class="m-4 text-3xl">Multilanguage Flashcard</h1>
+  <h1 class="max-w-80 mx-auto text-2xl sm:text-3xl">Multilanguage Flashcard</h1>
 
   <div class="mb-4 w-96">
-    <Label>Change your languages:</Label>
-    <Select class="mt-2" items={languages} bind:value={myLang} />
-    <Select class="mt-2" items={languages} bind:value={targetLang} />
+    <Label class="w-48 mx-auto">Change your languages:</Label>
+    <Select class="w-48 mx-auto mt-2" items={languages} bind:value={myLang} />
+    <Select class="w-48 mx-auto mt-2" items={languages} bind:value={targetLang} />
   </div>
   
   <h2 class="mb-4">You are learning {targetLanguage?.name} using {selectedLanguage?.name}</h2>
