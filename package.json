@@ -1,6 +1,6 @@
 {
 	"name": "multilanguage-flashcard",
-	"version": "1.0.4",
+	"version": "1.1.0",
 	"description": "Learn 27 languages with emojis on Multilanguage flashcard.",
 	"homepage": "https://multilanguage-flashcard.codewithshin.com/",
 	"repository": {
@@ -20,7 +20,10 @@
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
-		"test:e2e": "playwright test"
+		"test:e2e": "playwright test",
+		"ch": "npx changeset",
+		"cv": "npx changeset version",
+		"cp": "npx changeset publish"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^2.29.5",
