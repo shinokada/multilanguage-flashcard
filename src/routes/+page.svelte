@@ -5,7 +5,7 @@
   import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from '$lib';
   const randomIndexFn = randomNumberGenerator(26, 1933, 50);
 
-  let randomIndex = $state(randomIndexFn()); // This will be the index for the currently displayed emoji
+  let randomIndex = $state(randomIndexFn());
   let {
     myLang = $bindable('en'),
     targetLang = $bindable('nb')
@@ -13,7 +13,7 @@
 
   interface EmojiHistoryItem {
     index: number;
-    myLangValue: string; // Store language values used when this item was added
+    myLangValue: string;
     targetLangValue: string;
   }
 
@@ -48,19 +48,16 @@
   ];
 
   let emojiHistory = $state<Array<EmojiHistoryItem>>([]);
-  let currentIndex = $state(-1); // -1 means no card loaded yet
+  let currentIndex = $state(-1);
 
-  // These will hold the actual loaded emoji data for the *current* languages
   let currentMyLangData = $state<any[] | null>(null);
   let currentTargetLangData = $state<any[] | null>(null);
 
   let isTouch = $state(false);
   onMount(async () => {
     isTouch = window.matchMedia('(pointer: coarse)').matches;
-    // Load the initial data and set up the first card
     await loadCurrentEmojiData();
-    // Add the first card to history after initial load
-    if (currentIndex === -1) { // Only if history is empty
+    if (currentIndex === -1) {
       addToHistory(randomIndex);
     }
   });
@@ -83,20 +80,16 @@
     const deltaY = touchEndY - touchStartY;
 
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      // Horizontal swipe
       if (deltaX < -30) {
-        // Swipe left - navigate forward or generate new card
         if (currentIndex < emojiHistory.length - 1) {
           showNextEmoji();
         } else {
           nextWord();
         }
       } else if (deltaX > 30) {
-        // Swipe right - show previous word
         showPreviousEmoji();
       }
     } else {
-      // Vertical swipe
       if (deltaY < -30 || deltaY > 30) {
         toggleShowBack();
       }
@@ -113,7 +106,6 @@
     }
   };
 
-  // Function to load data for the *currently active* randomIndex and languages
   const loadCurrentEmojiData = async () => {
     currentMyLangData = await loadLanguageData(myLang);
     currentTargetLangData = await loadLanguageData(targetLang);
@@ -127,18 +119,14 @@
     };
     emojiHistory = [...emojiHistory, historyItem];
     currentIndex = emojiHistory.length - 1;
-    randomIndex = index; // Ensure randomIndex reflects the newly added item's index
+    randomIndex = index;
   };
 
-  // Function to move to a specific card in history
   const goToCard = async (idx: number) => {
     if (idx >= 0 && idx < emojiHistory.length) {
       currentIndex = idx;
       const historyItem = emojiHistory[currentIndex];
-      randomIndex = historyItem.index; // Set randomIndex to the one from history
-      // If the languages for this historical item are different from current,
-      // you might want to switch languages or just display in current languages.
-      // For now, we'll just reload the data based on *current* selected languages.
+      randomIndex = historyItem.index;
       await loadCurrentEmojiData();
       showCardBack = false;
     }
@@ -154,7 +142,6 @@
     if (currentIndex < emojiHistory.length - 1) {
       goToCard(currentIndex + 1);
     } else {
-      // If at the end of history, generate a new one
       nextWord();
     }
   };
@@ -164,52 +151,64 @@
   let showCardBack = $state(false);
   const toggleShowBack = () => (showCardBack = !showCardBack);
 
-  // This is the function responsible for creating a *new* random word
   const nextWord = async () => {
     showCardBack = false;
     const newRandomIndex = randomIndexFn();
     addToHistory(newRandomIndex);
-    await loadCurrentEmojiData(); // Ensure the data for the new card is loaded
+    await loadCurrentEmojiData();
   };
 
-  // Effect to re-load emoji data when myLang or targetLang changes
   $effect(() => {
-    // This effect ensures that the currently displayed emoji's text
-    // updates when the selected languages change.
-    // It *does not* generate a new randomIndex or add to history.
     if (myLang && targetLang && currentIndex !== -1) {
       loadCurrentEmojiData();
     }
   });
 
-
   function handleKeyDown(event: KeyboardEvent) {
+    const target = event.target as HTMLElement;
+
+    // Allow default behavior for inputs/selects
+    if (target.tagName === 'INPUT' || target.tagName === 'SELECT' || target.tagName === 'TEXTAREA') {
+        return;
+    }
+
+    // Check if the currently focused element is the flashcard itself
+    // This ensures we don't double-handle Enter/Space if they are handled by the card's onkeydown
+    // Or, if the card's onkeydown prevents default, this handler won't see the default action.
+    const isFlashcardFocused = target.classList.contains('flip-box-inner');
+
+
     if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      event.preventDefault(); // Prevent default scroll for arrows
       showPreviousEmoji();
     } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      event.preventDefault(); // Prevent default scroll for arrows
       showNextEmoji();
-    } else if (event.key === 'Enter' || event.key === ' ') {
-      toggleShowBack();
     } else if (event.key === 'n' || event.key === 'N') {
+      event.preventDefault(); // Prevent accidental page refresh/other actions
       nextWord();
     }
+    // Removed Enter and Space handling from global handler, as it's now directly on the div.
+    // The div's own onkeydown will handle these, or its onclick if it was focused.
   }
 
-  function preventDefault<T>(this: T, fn: (this: T, event: KeyboardEvent) => void) {
-    return function (this: T, event: KeyboardEvent) {
-      event.preventDefault();
-      fn.call(this, event);
-    };
-  }
+  // No longer need this wrapper, as handleKeyDown itself will preventDefault
+  // on svelte:window for the specific keys we want to control.
+  // function preventDefault<T>(this: T, fn: (this: T, event: KeyboardEvent) => void) {
+  //   return function (this: T, event: KeyboardEvent) {
+  //     event.preventDefault();
+  //     fn.call(this, event);
+  //   };
+  // }
 </script>
 
-<div class="flex flex-col items-center">
-  <h1 class="mx-4 text-3xl">Multilanguage Flashcard</h1>
+<div class="mt-15 flex flex-col items-center">
+  <h1 class="m-4 text-3xl">Multilanguage Flashcard</h1>
 
-  <div class="mb-4 mx-auto w-96">
-    <Label class="w-48 mx-auto">Change your languages:</Label>
-    <Select class="w-48 mx-auto mt-2" items={languages} bind:value={myLang} onchange={() => { /* nothing special here, the effect handles it */ }} />
-    <Select class="w-48 mx-auto mt-2" items={languages} bind:value={targetLang} onchange={() => { /* nothing special here, the effect handles it */ }} />
+  <div class="mb-4 w-96">
+    <Label>Change your languages:</Label>
+    <Select class="mt-2" items={languages} bind:value={myLang} />
+    <Select class="mt-2" items={languages} bind:value={targetLang} />
   </div>
   
   <h2 class="mb-4">You are learning {targetLanguage?.name} using {selectedLanguage?.name}</h2>
@@ -227,7 +226,12 @@
       class="flip-box-inner"
       class:flip-it={showCardBack}
       onclick={toggleShowBack}
-      onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleShowBack()}
+      onkeydown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault(); // Prevent default browser action (like scrolling for space)
+          toggleShowBack();
+        }
+      }}
       ontouchstart={handleTouchStart}
       ontouchend={handleTouchEnd}
       tabindex="0"
@@ -250,7 +254,7 @@
           {/if}
         </div>
         <div
-          class="absolute inset-0 flex flex-col items-center justify-center bg-green-500 p-4 text-white opacity-0 {showCardBack
+          class="absolute inset-0 flex flex-col items-center justify-center bg-green-400 p-4 text-white opacity-0 {showCardBack
             ? 'opacity-100 [transform:rotateY(180deg)]'
             : ''}"
         >
@@ -307,7 +311,7 @@
   </div>
 </div>
 
-<svelte:window onkeydown={preventDefault(handleKeyDown)} />
+<svelte:window onkeydown={handleKeyDown} />
 
 <style>
   /* This container is needed to position the front and back side */
