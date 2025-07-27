@@ -202,7 +202,7 @@
   // }
 </script>
 
-<div class="mt-15 flex flex-col items-center">
+<div class="flex flex-col items-center">
   <h1 class="m-4 text-3xl">Multilanguage Flashcard</h1>
 
   <div class="mb-4 w-96">
