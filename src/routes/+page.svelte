@@ -1,11 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Label, Select } from 'svelte-5-ui-lib';
-  import { randomNumberGenerator } from '$lib/utils';
+  import { Label, Select } from 'flowbite-svelte';
+  import { randomIndexGenerator } from '$lib/utils'; 
   import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from '$lib';
-  const randomIndexFn = randomNumberGenerator(26, 1933, 50);
 
-  let randomIndex = $state(randomIndexFn());
+  const getRandomIndex = randomIndexGenerator(50); 
+
+  let randomIndex = $state(0);
   let {
     myLang = $bindable('en'),
     targetLang = $bindable('nb')
@@ -17,7 +18,11 @@
     targetLangValue: string;
   }
 
-  const languages = [
+  interface LanguageOption {
+    value: string;
+    name: string;
+  }
+  const languages: LanguageOption[] = [
     { value: 'bn', name: 'বাংলা' },
     { value: 'da', name: 'Dansk' },
     { value: 'de', name: 'Deutsch' },
@@ -53,48 +58,10 @@
   let currentMyLangData = $state<any[] | null>(null);
   let currentTargetLangData = $state<any[] | null>(null);
 
-  let isTouch = $state(false);
-  onMount(async () => {
-    isTouch = window.matchMedia('(pointer: coarse)').matches;
-    await loadCurrentEmojiData();
-    if (currentIndex === -1) {
-      addToHistory(randomIndex);
-    }
-  });
+  const excludedSubgroups = new Set([98, 99]);
 
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let touchEndX = 0;
-  let touchEndY = 0;
-
-  function handleTouchStart(event: TouchEvent) {
-    touchStartX = event.changedTouches[0].screenX;
-    touchStartY = event.changedTouches[0].screenY;
-  }
-
-  function handleTouchEnd(event: TouchEvent) {
-    touchEndX = event.changedTouches[0].screenX;
-    touchEndY = event.changedTouches[0].screenY;
-
-    const deltaX = touchEndX - touchStartX;
-    const deltaY = touchEndY - touchStartY;
-
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      if (deltaX < -30) {
-        if (currentIndex < emojiHistory.length - 1) {
-          showNextEmoji();
-        } else {
-          nextWord();
-        }
-      } else if (deltaX > 30) {
-        showPreviousEmoji();
-      }
-    } else {
-      if (deltaY < -30 || deltaY > 30) {
-        toggleShowBack();
-      }
-    }
-  }
+  const filterEmojis = (data: any[]) =>
+    data.filter((emoji) => !excludedSubgroups.has(emoji.subgroup));
 
   const loadLanguageData = async (lang: string) => {
     try {
@@ -107,8 +74,12 @@
   };
 
   const loadCurrentEmojiData = async () => {
-    currentMyLangData = await loadLanguageData(myLang);
-    currentTargetLangData = await loadLanguageData(targetLang);
+    const [myData, targetData] = await Promise.all([
+      loadLanguageData(myLang),
+      loadLanguageData(targetLang)
+    ]);
+    currentMyLangData = filterEmojis(myData);
+    currentTargetLangData = filterEmojis(targetData);
   };
 
   const addToHistory = (index: number) => {
@@ -126,8 +97,13 @@
     if (idx >= 0 && idx < emojiHistory.length) {
       currentIndex = idx;
       const historyItem = emojiHistory[currentIndex];
-      randomIndex = historyItem.index;
+      myLang = historyItem.myLangValue;
+      targetLang = historyItem.targetLangValue;
       await loadCurrentEmojiData();
+
+      const total = currentMyLangData?.length || 0;
+      randomIndex = historyItem.index < total ? historyItem.index : 0;
+
       showCardBack = false;
     }
   };
@@ -146,60 +122,57 @@
     }
   };
 
+  const nextWord = async () => {
+    showCardBack = false;
+    await loadCurrentEmojiData();
+
+    const total = currentMyLangData?.length || 0;
+    if (total === 0) return;
+
+    const newRandomIndex = getRandomIndex(total); // ✅ dynamic length
+    addToHistory(newRandomIndex);
+  };
+
+  let isTouch = $state(false);
+  onMount(async () => {
+    isTouch = window.matchMedia('(pointer: coarse)').matches;
+    await nextWord(); // ✅ use filtered data
+  });
+
   const selectedLanguage = $derived(languages.find((lang) => lang.value === myLang));
   const targetLanguage = $derived(languages.find((lang) => lang.value === targetLang));
+
   let showCardBack = $state(false);
   const toggleShowBack = () => (showCardBack = !showCardBack);
 
-  const nextWord = async () => {
-    showCardBack = false;
-    const newRandomIndex = randomIndexFn();
-    addToHistory(newRandomIndex);
-    await loadCurrentEmojiData();
-  };
+  let touchStartX = 0, touchStartY = 0, touchEndX = 0, touchEndY = 0;
 
-  $effect(() => {
-    if (myLang && targetLang && currentIndex !== -1) {
-      loadCurrentEmojiData();
+  function handleTouchStart(event: TouchEvent) {
+    touchStartX = event.changedTouches[0].screenX;
+    touchStartY = event.changedTouches[0].screenY;
+  }
+
+  function handleTouchEnd(event: TouchEvent) {
+    touchEndX = event.changedTouches[0].screenX;
+    touchEndY = event.changedTouches[0].screenY;
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX < -30) currentIndex < emojiHistory.length - 1 ? showNextEmoji() : nextWord();
+      else if (deltaX > 30) showPreviousEmoji();
+    } else {
+      if (deltaY < -30 || deltaY > 30) toggleShowBack();
     }
-  });
+  }
 
   function handleKeyDown(event: KeyboardEvent) {
     const target = event.target as HTMLElement;
-
-    // Allow default behavior for inputs/selects
-    if (target.tagName === 'INPUT' || target.tagName === 'SELECT' || target.tagName === 'TEXTAREA') {
-        return;
-    }
-
-    // Check if the currently focused element is the flashcard itself
-    // This ensures we don't double-handle Enter/Space if they are handled by the card's onkeydown
-    // Or, if the card's onkeydown prevents default, this handler won't see the default action.
-    const isFlashcardFocused = target.classList.contains('flip-box-inner');
-
-
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-      event.preventDefault(); // Prevent default scroll for arrows
-      showPreviousEmoji();
-    } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-      event.preventDefault(); // Prevent default scroll for arrows
-      showNextEmoji();
-    } else if (event.key === 'n' || event.key === 'N') {
-      event.preventDefault(); // Prevent accidental page refresh/other actions
-      nextWord();
-    }
-    // Removed Enter and Space handling from global handler, as it's now directly on the div.
-    // The div's own onkeydown will handle these, or its onclick if it was focused.
+    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return;
+    if (['ArrowLeft', 'ArrowUp'].includes(event.key)) { event.preventDefault(); showPreviousEmoji(); }
+    else if (['ArrowRight', 'ArrowDown'].includes(event.key)) { event.preventDefault(); showNextEmoji(); }
+    else if (event.key === 'n' || event.key === 'N') { event.preventDefault(); nextWord(); }
   }
-
-  // No longer need this wrapper, as handleKeyDown itself will preventDefault
-  // on svelte:window for the specific keys we want to control.
-  // function preventDefault<T>(this: T, fn: (this: T, event: KeyboardEvent) => void) {
-  //   return function (this: T, event: KeyboardEvent) {
-  //     event.preventDefault();
-  //     fn.call(this, event);
-  //   };
-  // }
 </script>
 
 <div class="flex flex-col items-center">

@@ -50,6 +50,31 @@ export const randomNumberGenerator = (
   };
 };
 
+export const randomIndexGenerator = (
+  maxConsecutiveRepeats: number
+): ((arrayLength: number) => number) => {
+  const previousIndices: number[] = [];
+
+  return (length: number): number => {
+    if (length <= 0) throw new Error("Array length must be greater than 0");
+
+    let randomIndex: number;
+
+    do {
+      randomIndex = Math.floor(Math.random() * length);
+    } while (previousIndices.includes(randomIndex) && previousIndices.length < length);
+
+    if (previousIndices.length >= maxConsecutiveRepeats) {
+      previousIndices.shift();
+    }
+
+    previousIndices.push(randomIndex);
+
+    return randomIndex;
+  };
+};
+
+
 interface WordPair {
   norsk: string;
   english: string;
