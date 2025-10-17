@@ -9,7 +9,7 @@
 </script>
 
 <header
-	class="sticky top-0 z-40 mx-auto w-full flex-none border-b border-gray-200 bg-white dark:border-gray-600 dark:bg-sky-950"
+	class="sticky top-0 z-40 mx-auto w-full flex-none border-b border-gray-200 bg-white dark:border-gray-600 dark:bg-indigo-950"
 >
 	<Navbar fluid class="px-8">
 		<NavBrand href="/">
