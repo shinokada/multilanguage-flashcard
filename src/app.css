@@ -2,17 +2,16 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-
-@source "../node_modules/flowbite-svelte/dist";
+@source '../node_modules/flowbite-svelte/dist';
 
 @layer base {
-  h1 {
-    @apply my-6 text-3xl dark:text-white;
-  }
-  h2 {
-    @apply my-4 text-2xl dark:text-white;
-  }
-  h3 {
-    @apply my-2 text-xl dark:text-white;
-  }
+	h1 {
+		@apply my-6 text-3xl dark:text-white;
+	}
+	h2 {
+		@apply my-4 text-2xl dark:text-white;
+	}
+	h3 {
+		@apply my-2 text-xl dark:text-white;
+	}
 }

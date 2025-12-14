@@ -2,10 +2,7 @@
 	import { Navbar, NavLi, NavBrand, NavUl, NavHamburger, DarkMode } from 'flowbite-svelte';
 	import { page } from '$app/state';
 
-	let activeUrl = $state(page.url.pathname);
-	$effect(() => {
-		activeUrl = page.url.pathname;
-	});
+	let activeUrl = $derived(page.url.pathname);
 </script>
 
 <header
@@ -16,11 +13,11 @@
 			<span class="ml-2 self-center text-xl font-semibold whitespace-nowrap dark:text-white"
 				>Multilanguage flashcard</span
 			>
-      </NavBrand>
-			<div class="flex items-center lg:order-2">
-				<DarkMode class="inline-block hover:text-gray-900 dark:hover:text-white" />
-				<NavHamburger />
-			</div>
+		</NavBrand>
+		<div class="flex items-center lg:order-2">
+			<DarkMode class="inline-block hover:text-gray-900 dark:hover:text-white" />
+			<NavHamburger />
+		</div>
 		<NavUl {activeUrl} class="lg:order-1 lg:space-x-5 xl:space-x-8">
 			<NavLi href="/">Home</NavLi>
 			<NavLi href="/emoji">Emoji</NavLi>
