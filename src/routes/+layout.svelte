@@ -1,7 +1,7 @@
 <script>
 	import '../app.css';
 	import { Runatics } from 'runatics';
-	import { RunesMetaTags, deepMerge } from 'runes-meta-tags';
+	import { MetaTags, deepMerge } from 'runes-meta-tags';
 	import { page } from '$app/state';
 	import Nav from './components/Nav.svelte';
 	import Footer from './components/Footer.svelte';
@@ -16,7 +16,7 @@
 </script>
 
 <Runatics {analyticsId} />
-<RunesMetaTags {...metaTags} />
+<MetaTags {...metaTags} />
 <Nav />
 <main class="border-b border-gray-200 p-4 pb-16 dark:border-gray-700">
 	{@render children()}
